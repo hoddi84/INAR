@@ -47,7 +47,7 @@ public class Merchant {
 
     // assuming all players are in here with their values pre-calculated.
     public MerchantActions maxQaction(Player player) {
-        double maxValue = 0;
+        double maxValue = Integer.MIN_VALUE;
         MerchantActions action = MerchantActions.NULL;
         for (int i = 0; i < Q.size(); i++) {
             if (player.race.equals(Q.get(i).playerRace)) {
@@ -62,11 +62,16 @@ public class Merchant {
 
     public void updateQ(Player player, MerchantActions merchantActions) {
 
-        double R = getR(player, merchantActions);
-        double Q = getQ(player, merchantActions);
-        double Qnext = getQnext(player, merchantActions);
-        double newQvalue = Q + alpha*(R + gamma*Qnext - Q);
-        setQ(player, merchantActions, newQvalue);
+        if (merchantActions.equals(MerchantActions.ThrowOut)) {
+            System.out.println("Throw out not changing Q value");
+        }
+        else {
+            double R = getR(player, merchantActions);
+            double Q = getQ(player, merchantActions);
+            double Qnext = getQnext(player, merchantActions);
+            double newQvalue = Q + alpha*(R + gamma*Qnext - Q);
+            setQ(player, merchantActions, newQvalue);
+        }
     }
 
     // set the new Q value for the corresponding player race and merchant action.

@@ -22,8 +22,8 @@ public class Helper {
     public static ArrayList<StateActionValue> CreateQ() {
 
         ArrayList<StateActionValue> list = new ArrayList<>();
-        StateActionValue state1act1 = new StateActionValue(Races.Human, MerchantActions.LetIn, 3.0);
-        StateActionValue state1act2 = new StateActionValue(Races.Human, MerchantActions.ThrowOut, 2.0);
+        StateActionValue state1act1 = new StateActionValue(Races.Human, MerchantActions.LetIn, 0.0);
+        StateActionValue state1act2 = new StateActionValue(Races.Human, MerchantActions.ThrowOut, 0.0);
         StateActionValue state2act1 = new StateActionValue(Races.Troll, MerchantActions.LetIn, 0.0);
         StateActionValue state2act2 = new StateActionValue(Races.Troll, MerchantActions.ThrowOut, 0.0);
         list.add(state1act1);
