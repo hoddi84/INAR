@@ -20,10 +20,12 @@ public class Main {
             System.out.println(element);
         }
 
+        // testing 1 2 3 HOUSTON
         // run for 30 iterations.
         // meeting a human who buys and steals half the time.
         // 90% chance to choose maxQvalue action, 10% chance for random.
-        // pre-initialized values are 12.0 for LetIn, and 5.0 for ThrowOut.
+        // pre-initialized values are 3.0 for LetIn, and 2.0 for ThrowOut.
+        // since LetIn is higher, is should choose LetIn action 90% of the time.
         for (int i = 0; i < 30; i++) {
 
             merchant.MeetPlayer(player1);
