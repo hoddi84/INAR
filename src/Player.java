@@ -13,9 +13,17 @@ public class Player {
             this.playerActions = playerActions;
             this.actionScore = 2;
         }
-        else {
+        if (playerActions == PlayerActions.Steal) {
             this.playerActions = playerActions;
             this.actionScore = -3;
+        }
+        if (playerActions == PlayerActions.Sell) {
+            this.playerActions = playerActions;
+            this.actionScore = 1;
+        }
+        if (playerActions == PlayerActions.Leave) {
+            this.playerActions = playerActions;
+            this.actionScore = 0;
         }
     }
 

@@ -68,8 +68,8 @@ public class Merchant {
         else {
             double R = getR(player, merchantActions);
             double Q = getQ(player, merchantActions);
-            double Qnext = getQnext(player, merchantActions);
-            double newQvalue = Q + alpha*(R + gamma*Qnext - Q);
+            double Qmax = getQmax(player);
+            double newQvalue = Q + alpha*(R + gamma*Qmax - Q);
             setQ(player, merchantActions, newQvalue);
         }
     }
@@ -98,6 +98,22 @@ public class Merchant {
         return Qval;
     }
 
+    // Get the highest Q-value from all possible actions for a given player.
+    public double getQmax(Player player) {
+        MerchantActions maxAction = maxQaction(player);
+        double QmaxVal = Integer.MIN_VALUE;
+        for (int i = 0; i < Q.size(); i++) {
+            if (player.race.equals(Q.get(i).playerRace)) {
+                if (maxAction.equals(Q.get(i).merchantActions)) {
+                    QmaxVal = Q.get(i).value;
+                }
+            }
+        }
+        return QmaxVal;
+    }
+
+    // not using currently, since we always want the highest Q-value for all actions.
+    // when calculating maxQ(a) in the Q-Learning algorithm.
     public double getQnext(Player player, MerchantActions merchantActions) {
         double Qnext = getQ(player, merchantActions);
         Qnext += player.actionScore;

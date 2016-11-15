@@ -3,5 +3,7 @@
  */
 public enum PlayerActions {
     Steal,
-    Buy
+    Buy,
+    Sell,
+    Leave
 }
