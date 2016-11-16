@@ -36,7 +36,7 @@ public class Merchant {
     public void MeetPlayer(Player player) {
         System.out.println("\nI met: " + player);
         if (merchantActions(player) == MerchantActions.LetIn) {
-            System.out.println("I let you in"); // immediate reward is 1.
+            System.out.println("I let you in"); // immediate reward is 1. //change to player action TODO
             updateQ(player,MerchantActions.LetIn);
         }
         else {

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by hoddi84 on 15.11.2016.
@@ -9,27 +10,20 @@ public class Main {
 
         Merchant merchant = new Merchant();
         Player player1 = new Player(Races.Human, PlayerActions.Buy);
-        Player player2 = new Player(Races.Human, PlayerActions.Sell);
-        Player player3 = new Player(Races.Human, PlayerActions.Leave);
-        Player player4 = new Player(Races.Human, PlayerActions.Steal);
+        Player player2 = new Player(Races.Human, PlayerActions.Buy);
+        Player player3 = new Player(Races.Troll, PlayerActions.Steal);
+        Player player4 = new Player(Races.Troll, PlayerActions.Buy);
 
-        PrintQ(merchant);
+        Player player6 = new Player(Races.Goblin, PlayerActions.Sell);
 
-        merchant.MeetPlayer(player1);
+        HashMap<String,Integer> hash = new HashMap<>(Helper.QPartialPlayerMatches(merchant, player6));
+        System.out.println(hash);
 
-        PrintQ(merchant);
+        //ArrayList<String> list = new ArrayList<>(Helper.QMatchedAttributes(merchant.Q.get(1), player6));
+        //System.out.println(list);
 
-        merchant.MeetPlayer(player2);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player4);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player3);
-
-        PrintQ(merchant);
+        double d = Helper.QPartialPlayerScore(merchant, player6);
+        System.out.println(d);
 
 
     }
