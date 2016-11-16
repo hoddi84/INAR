@@ -19,13 +19,14 @@ public class Main {
         HashMap<String,Integer> hash = new HashMap<>(Helper.QPartialPlayerMatches(merchant, player6));
         System.out.println(hash);
 
-        //ArrayList<String> list = new ArrayList<>(Helper.QMatchedAttributes(merchant.Q.get(1), player6));
-        //System.out.println(list);
-
         double d = Helper.QPartialPlayerScore(merchant, player6);
         System.out.println(d);
 
 
+        // TODO
+        // change from racial bias to feature bias, by using the helper functions to replace some in Merchant.java.
+        // replace the reward R, with the corresponding player action score as the immediate reward, R.
+        // .....
     }
 
     static void PrintQ(Merchant merchant) {
