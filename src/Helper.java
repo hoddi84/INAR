@@ -32,5 +32,14 @@ public class Helper {
         list.add(state2act2);
         return list;
     }
-    
+
+    public static boolean QContainsPlayer(Merchant merchant, Player player) {
+
+        for (int i = 0; i < merchant.Q.size(); i++) {
+            if (player.getFeatures().equals(merchant.Q.get(i).features)) {
+                return true;
+            }
+        }
+        return false; 
+    }
 }
