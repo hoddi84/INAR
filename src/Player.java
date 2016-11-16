@@ -1,14 +1,20 @@
+import java.util.ArrayList;
+
 /**
  * Created by hoddi84 on 15.11.2016.
  */
 public class Player {
 
-    Races race;
+    Races races;
+    Race race;
     PlayerActions playerActions;
     int actionScore;
+    ArrayList<String> features;
 
-    public Player(Races race, PlayerActions playerActions) {
-        this.race = race;
+    public Player(Races races, PlayerActions playerActions) {
+        this.races = races;
+        this.race = new Race(races);
+        this.features = this.race.features.getFeatures();
         if (playerActions == PlayerActions.Buy) {
             this.playerActions = playerActions;
             this.actionScore = 2;
@@ -27,8 +33,12 @@ public class Player {
         }
     }
 
+    public ArrayList<String> getFeatures() {
+        return features;
+    }
+
     @Override
     public String toString() {
-        return race + " " + playerActions + " " + actionScore;
+        return races + " " + features + " " + playerActions + " " + actionScore;
     }
 }
