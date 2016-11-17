@@ -6,6 +6,7 @@ import java.util.HashMap;
  */
 public class Helper {
 
+    // not using this now, we are using getRfromPlayer in Merchant.java
     public static ArrayList<StateActionValue> CreateR() {
 
         ArrayList<StateActionValue> list = new ArrayList<>();

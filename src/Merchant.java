@@ -67,7 +67,8 @@ public class Merchant {
             System.out.println("Throw out not changing Q value");
         }
         else {
-            double R = getR(player, merchantActions);
+            //double R = getR(player, merchantActions); OLD
+            double R = getRfromPlayer(player);
             double Q = getQ(player, merchantActions);
             double Qmax = getQmax(player);
             double newQvalue = Q + alpha*(R + gamma*Qmax - Q);
