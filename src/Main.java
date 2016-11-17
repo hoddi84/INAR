@@ -18,13 +18,22 @@ public class Main {
 
         PrintQ(merchant);
 
-        HashMap<String,Integer> hash = new HashMap<>(Helper.QPartialPlayerMatches(merchant, player6));
-        System.out.println(hash);
+        for (int i = 0; i < 10; i++) {
+            merchant.MeetPlayer(player1);
+
+            PrintQ(merchant);
+        }
 
 
 
-        double[] d = Helper.QPartialPlayerScoreEachAction(merchant, player6);
-        System.out.println(d[0] + " " +  d[1]);
+
+
+        //HashMap<String,Integer> hash = new HashMap<>(Helper.QPartialPlayerMatches(merchant, player6));
+        //System.out.println(hash);
+
+
+        //double[] d = Helper.QPartialPlayerScoreEachAction(merchant, player6);
+        //System.out.println(d[0] + " " +  d[1]);
 
 
         // TODO
