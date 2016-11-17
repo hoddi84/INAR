@@ -152,4 +152,23 @@ public class Helper {
         accumulatedScore[1] = accumulatedScore[1]/counter2;
         return accumulatedScore;
     }
+
+    // IM HERE
+    public static HashMap<String, Double> MerchantGreet(Merchant merchant, Player player) {
+        HashMap<String, Integer> map = new HashMap<>(QPartialPlayerMatches(merchant, player));
+        HashMap<String, Double> newMap = new HashMap<>();
+        for (int i = 0; i < merchant.Q.size(); i++) {
+            for (int k = 0; k < merchant.Q.get(i).features.size(); k++) {
+                if (map.containsKey(merchant.Q.get(i).features.get(k))) {
+                    double newScore = merchant.Q.get(i).value / merchant.Q.get(i).features.size();
+                    System.out.println("newScore: " + newScore);
+                    
+                    double replacedScore = oldScore + newScore;
+                    System.out.println("replacedScore: " + replacedScore);
+                    newMap.put(merchant.Q.get(i).features.get(k), replacedScore);
+                }
+            }
+        }
+        return newMap;
+    }
 }

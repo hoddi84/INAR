@@ -18,6 +18,9 @@ public class StateActionValue {
         this.raceType = raceType;
         this.merchantActions = merchantActions;
         this.value = value;
+        if (Double.isNaN(value)) {
+            this.value = 0.0;
+        }
     }
 
     @Override
