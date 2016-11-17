@@ -15,11 +15,13 @@ public class Main {
 
         PrintQ(merchant);
 
-        for (int i = 0; i < 10; i++) {
-            merchant.MeetPlayer(player1);
+        merchant.MeetPlayer(player1);
 
-            PrintQ(merchant);
-        }
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player3);
+
+        PrintQ(merchant);
 
 
 

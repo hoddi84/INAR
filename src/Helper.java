@@ -32,12 +32,7 @@ public class Helper {
         StateActionValue state1act2 = new StateActionValue(RaceType.Human, MerchantActions.ThrowOut, 4.0);
         StateActionValue state2act1 = new StateActionValue(RaceType.Troll, MerchantActions.LetIn, 5.0);
         StateActionValue state2act2 = new StateActionValue(RaceType.Troll, MerchantActions.ThrowOut, 5.0);
-        /*
-        StateActionValue state1act1 = new StateActionValue(RaceType.Orc, MerchantActions.LetIn, 6.0);
-        StateActionValue state1act2 = new StateActionValue(RaceType.Orc, MerchantActions.ThrowOut, 2.0);
-        StateActionValue state2act1 = new StateActionValue(RaceType.Troll, MerchantActions.LetIn, 3.0);
-        StateActionValue state2act2 = new StateActionValue(RaceType.Troll, MerchantActions.ThrowOut, 4.0);
-        */
+
         list.add(state1act1);
         list.add(state1act2);
         list.add(state2act1);
@@ -46,6 +41,7 @@ public class Helper {
     }
 
     // check if Q contains this player, by seeing if it contains ALL his features.
+    // moved this to Merchant.java where it is being used.
     public static boolean QContainsPlayer(Merchant merchant, Player player) {
 
         for (int i = 0; i < merchant.Q.size(); i++) {

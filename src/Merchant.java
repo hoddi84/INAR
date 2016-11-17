@@ -46,12 +46,14 @@ public class Merchant {
         }
     }
 
+    // CHANGES
     // assuming all players are in here with their values pre-calculated.
     public MerchantActions maxQaction(Player player) {
         double maxValue = Integer.MIN_VALUE;
         MerchantActions action = MerchantActions.NULL;
         for (int i = 0; i < Q.size(); i++) {
-            if (player.raceType.equals(Q.get(i).raceType)) {
+            // if (player.raceType.equals(Q.get(i).raceType)) { OLD
+            if (QContainsPlayer(player,i)) {
                 if (maxValue < Q.get(i).value) {
                     maxValue = Q.get(i).value;
                     action = Q.get(i).merchantActions;
@@ -61,13 +63,24 @@ public class Merchant {
         return action;
     }
 
+    // CHANGES
+    // check if Q contains this player, by seeing if it contains ALL his features.
+    public boolean QContainsPlayer(Player player, int counter) {
+
+        //for (int i = 0; i < Q.size(); i++) {
+            if (player.getFeatures().equals(Q.get(counter).features)) {
+                return true;
+            }
+        //}
+        return false;
+    }
+
     public void updateQ(Player player, MerchantActions merchantActions) {
 
         if (merchantActions.equals(MerchantActions.ThrowOut)) {
             System.out.println("Throw out not changing Q value");
         }
         else {
-            //double R = getR(player, merchantActions); OLD
             double R = getRfromPlayer(player);
             double Q = getQ(player, merchantActions);
             double Qmax = getQmax(player);
@@ -129,6 +142,7 @@ public class Merchant {
     }
 
     // get the R value from the created table.
+    // not using, we are using getRfromPlayer().
     public double getR(Player player, MerchantActions merchantActions) {
         double Rval = 0;
         for (int i = 0; i < R.size(); i++) {
