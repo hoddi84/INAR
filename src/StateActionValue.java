@@ -5,23 +5,23 @@ import java.util.ArrayList;
  */
 public class StateActionValue {
 
-    Races races;
+    RaceType raceType;
     Race race;
     ArrayList<String> features;
     MerchantActions merchantActions;
     double value;
 
-    public StateActionValue(Races races, MerchantActions merchantActions, double value) {
+    public StateActionValue(RaceType raceType, MerchantActions merchantActions, double value) {
 
-        this.race = new Race(races);
+        this.race = new Race(raceType);
         this.features = this.race.features.getFeatures();
-        this.races = races;
+        this.raceType = raceType;
         this.merchantActions = merchantActions;
         this.value = value;
     }
 
     @Override
     public String toString() {
-        return races + " " + features + " " + merchantActions + " " + value;
+        return raceType + " " + features + " " + merchantActions + " " + value;
     }
 }

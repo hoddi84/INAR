@@ -1,7 +1,7 @@
 /**
  * Created by Tryggvi on 03/11/2016.
  */
-enum Races {
+enum RaceType {
     Orc,
     Elf,
     Goblin,
@@ -13,8 +13,8 @@ public class Race {
 
     Features features;
 
-    public Race(Races race) {
-        switch (race) {
+    public Race(RaceType raceType) {
+        switch (raceType) {
             case Orc:
                 features = new Features(Height.Large, SkinColor.Green, Ears.Pointy);
                 break;

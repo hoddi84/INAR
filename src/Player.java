@@ -5,15 +5,15 @@ import java.util.ArrayList;
  */
 public class Player {
 
-    Races races;
+    RaceType raceType;
     Race race;
     PlayerActions playerActions;
     int actionScore;
     ArrayList<String> features;
 
-    public Player(Races races, PlayerActions playerActions) {
-        this.races = races;
-        this.race = new Race(races);
+    public Player(RaceType raceType, PlayerActions playerActions) {
+        this.raceType = raceType;
+        this.race = new Race(raceType);
         this.features = this.race.features.getFeatures();
         if (playerActions == PlayerActions.Buy) {
             this.playerActions = playerActions;
@@ -39,6 +39,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return races + " " + features + " " + playerActions + " " + actionScore;
+        return raceType + " " + features + " " + playerActions + " " + actionScore;
     }
 }
