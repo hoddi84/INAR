@@ -158,14 +158,20 @@ public class Helper {
         HashMap<String, Integer> map = new HashMap<>(QPartialPlayerMatches(merchant, player));
         HashMap<String, Double> newMap = new HashMap<>();
         for (int i = 0; i < merchant.Q.size(); i++) {
+            double newScore = 0.0;
             for (int k = 0; k < merchant.Q.get(i).features.size(); k++) {
                 if (map.containsKey(merchant.Q.get(i).features.get(k))) {
-                    double newScore = merchant.Q.get(i).value / merchant.Q.get(i).features.size();
+                    newScore = merchant.Q.get(i).value / merchant.Q.get(i).features.size();
                     System.out.println("newScore: " + newScore);
-                    
-                    double replacedScore = oldScore + newScore;
-                    System.out.println("replacedScore: " + replacedScore);
-                    newMap.put(merchant.Q.get(i).features.get(k), replacedScore);
+                    if (newMap.containsKey(merchant.Q.get(i).features.get(k))) {
+                        double oldScore = newMap.get(merchant.Q.get(i).features.get(k));
+                        double nextScore = newScore + oldScore;
+                        newMap.replace(merchant.Q.get(i).features.get(k), oldScore, nextScore);
+                    }
+                    else {
+                        newMap.put(merchant.Q.get(i).features.get(k), newScore);
+                    }
+
                 }
             }
         }

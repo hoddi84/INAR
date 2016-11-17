@@ -15,6 +15,7 @@ public class Main {
         Player player4 = new Player(RaceType.Troll, PlayerActions.Buy);
         Player player5 = new Player(RaceType.Elf, PlayerActions.Buy);
         Player player6 = new Player(RaceType.Goblin, PlayerActions.Sell);
+        Player player7 = new Player(RaceType.Human, PlayerActions.Steal);
 
         PrintQ(merchant);
 
@@ -23,6 +24,10 @@ public class Main {
         PrintQ(merchant);
 
         merchant.MeetPlayer(player6);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player7);
 
         PrintQ(merchant);
 
