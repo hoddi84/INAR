@@ -36,9 +36,13 @@ public class Helper {
         list.add(state2act2);
         */
         StateActionValue state1act1 = new StateActionValue(Races.Orc, MerchantActions.LetIn, 6.0);
-        StateActionValue state1act2 = new StateActionValue(Races.Troll, MerchantActions.ThrowOut, 3.0);
+        StateActionValue state1act2 = new StateActionValue(Races.Orc, MerchantActions.ThrowOut, 2.0);
+        StateActionValue state2act1 = new StateActionValue(Races.Troll, MerchantActions.LetIn, 3.0);
+        StateActionValue state2act2 = new StateActionValue(Races.Troll, MerchantActions.ThrowOut, 4.0);
         list.add(state1act1);
         list.add(state1act2);
+        list.add(state2act1);
+        list.add(state2act2);
         return list;
     }
 
@@ -96,6 +100,7 @@ public class Helper {
 
     // calculate a score for a new player, from previously observed attributes.
     // using the method we sent to David to calculate a new score for a semi unknown player.
+    // WE ARE NOT USING THIS. WE WANT THE SCORE TO REPRESENT EACH MERCHANT ACTION SCORE.
     public static double QPartialPlayerScore(Merchant merchant, Player player) {
         HashMap<String, Integer> map = new HashMap<>(QPartialPlayerMatches(merchant,player));
         double totalAttributes = map.get("total");
@@ -113,5 +118,43 @@ public class Helper {
             accumulatedScore += (scoreAttributes/totalAttributes)*element.value;
         }
         return accumulatedScore/counter;
+    }
+
+    // calculate a score for a new player, from previously observed attributes.
+    // here we calculate a separate score for each merchant action.
+    // we are hardcoding the merchant actions here.
+    public static double[] QPartialPlayerScoreEachAction(Merchant merchant, Player player) {
+        HashMap<String, Integer> map = new HashMap<>(QPartialPlayerMatches(merchant,player));
+        double totalAttributes = map.get("total");
+        int counter = 0;
+        int counter2 = 0;
+        double[] accumulatedScore = {0.0, 0.0};
+        for (StateActionValue element : merchant.Q) {
+            if (element.merchantActions.equals(MerchantActions.LetIn)) {
+                double scoreAttributes = 0;
+                ArrayList<String> matches = new ArrayList<>(QMatchedAttributes(element, player));
+                if (!matches.isEmpty()) {
+                    counter++;
+                }
+                for (String match : matches) {
+                    scoreAttributes += map.get(match);
+                }
+                accumulatedScore[0] += (scoreAttributes / totalAttributes) * element.value;
+            }
+            if (element.merchantActions.equals(MerchantActions.ThrowOut)) {
+                double scoreAttributes = 0;
+                ArrayList<String> matches = new ArrayList<>(QMatchedAttributes(element, player));
+                if (!matches.isEmpty()) {
+                    counter2++;
+                }
+                for (String match : matches) {
+                    scoreAttributes += map.get(match);
+                }
+                accumulatedScore[1] += (scoreAttributes / totalAttributes) * element.value;
+            }
+        }
+        accumulatedScore[0] = accumulatedScore[0]/counter;
+        accumulatedScore[1] = accumulatedScore[1]/counter2;
+        return accumulatedScore;
     }
 }
