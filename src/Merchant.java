@@ -51,7 +51,7 @@ public class Merchant {
         double maxValue = Integer.MIN_VALUE;
         MerchantActions action = MerchantActions.NULL;
         for (int i = 0; i < Q.size(); i++) {
-            if (player.races.equals(Q.get(i).races)) {
+            if (player.raceType.equals(Q.get(i).raceType)) {
                 if (maxValue < Q.get(i).value) {
                     maxValue = Q.get(i).value;
                     action = Q.get(i).merchantActions;
@@ -78,7 +78,7 @@ public class Merchant {
     // set the new Q value for the corresponding player race and merchant action.
     public void setQ(Player player, MerchantActions merchantActions, double newQvalue) {
         for (int i = 0; i < Q.size(); i++) {
-            if (player.races.equals(Q.get(i).races)) {
+            if (player.raceType.equals(Q.get(i).raceType)) {
                 if (merchantActions.equals(Q.get(i).merchantActions)) {
                     Q.get(i).value = newQvalue;
                 }
@@ -90,7 +90,7 @@ public class Merchant {
     public double getQ(Player player, MerchantActions merchantActions) {
         double Qval = 0;
         for (int i = 0; i < Q.size(); i++) {
-            if (player.races.equals(Q.get(i).races)) {
+            if (player.raceType.equals(Q.get(i).raceType)) {
                 if (merchantActions.equals(Q.get(i).merchantActions)) {
                     Qval = Q.get(i).value;
                 }
@@ -104,7 +104,7 @@ public class Merchant {
         MerchantActions maxAction = maxQaction(player);
         double QmaxVal = Integer.MIN_VALUE;
         for (int i = 0; i < Q.size(); i++) {
-            if (player.races.equals(Q.get(i).races)) {
+            if (player.raceType.equals(Q.get(i).raceType)) {
                 if (maxAction.equals(Q.get(i).merchantActions)) {
                     QmaxVal = Q.get(i).value;
                 }
@@ -124,7 +124,7 @@ public class Merchant {
     public double getR(Player player, MerchantActions merchantActions) {
         double Rval = 0;
         for (int i = 0; i < R.size(); i++) {
-            if (player.races.equals(R.get(i).races)) {
+            if (player.raceType.equals(R.get(i).raceType)) {
                 if (merchantActions.equals(R.get(i).merchantActions)) {
                     Rval = R.get(i).value;
                 }

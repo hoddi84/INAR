@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * Created by hoddi84 on 15.11.2016.
  */
@@ -9,12 +6,12 @@ public class Main {
     public static void main(String args[]) {
 
         Merchant merchant = new Merchant();
-        Player player1 = new Player(Races.Human, PlayerActions.Buy);
-        Player player2 = new Player(Races.Human, PlayerActions.Buy);
-        Player player3 = new Player(Races.Troll, PlayerActions.Steal);
-        Player player4 = new Player(Races.Troll, PlayerActions.Buy);
+        Player player1 = new Player(RaceType.Human, PlayerActions.Buy);
+        Player player2 = new Player(RaceType.Human, PlayerActions.Buy);
+        Player player3 = new Player(RaceType.Troll, PlayerActions.Steal);
+        Player player4 = new Player(RaceType.Troll, PlayerActions.Buy);
 
-        Player player6 = new Player(Races.Goblin, PlayerActions.Sell);
+        Player player6 = new Player(RaceType.Goblin, PlayerActions.Sell);
 
         PrintQ(merchant);
 
