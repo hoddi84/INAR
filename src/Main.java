@@ -26,6 +26,7 @@ public class Main {
         // TODO
         // change from racial bias to feature bias, by using the helper functions to replace some in Merchant.java.
         // replace the reward R, with the corresponding player action score as the immediate reward, R.
+        // fix the score function w.r.t. merchant actions before adding to Q.
         // .....
     }
 
