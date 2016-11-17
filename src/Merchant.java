@@ -121,6 +121,13 @@ public class Merchant {
         return Qnext;
     }
 
+    // get the R, immediate reward, from the player's action score.
+    public double getRfromPlayer(Player player) {
+        double Rval = player.actionScore;
+        return Rval;
+    }
+
+    // get the R value from the created table.
     public double getR(Player player, MerchantActions merchantActions) {
         double Rval = 0;
         for (int i = 0; i < R.size(); i++) {
@@ -132,7 +139,4 @@ public class Merchant {
         }
         return Rval;
     }
-
-
-
 }
