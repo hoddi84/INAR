@@ -23,24 +23,35 @@ public class Main {
 
         PrintQ(merchant);
 
+        merchant.MeetPlayer(player5);
+
+        PrintQ(merchant);
+
+        Helper.UpdateQAllTable(MerchantActions.LetIn, merchant, player7, 2.0);
+
+        PrintQ(merchant);
+
+        /*
         merchant.MeetPlayer(player6);
 
         PrintQ(merchant);
 
-        merchant.MeetPlayer(player7);
+        merchant.MeetPlayer(player5);
 
         PrintQ(merchant);
 
+        Helper.UpdateQAllTable(MerchantActions.LetIn, merchant, player5, 2.0);
 
-        //HashMap<String, Integer> map = new HashMap<>(Helper.QPartialPlayerMatches(merchant,player5));
+        PrintQ(merchant);
+*/
+
+
+
+
+        //HashMap<String,Integer> hash = merchant.QPartialPlayerMatches(player5);
+        //System.out.println(hash);
+        //HashMap<String, Double> map = new HashMap<>(Helper.CalculateIndividialAttrScore(merchant, player5));
         //System.out.println(map);
-
-
-
-        HashMap<String,Integer> hash = merchant.QPartialPlayerMatches(player5);
-        System.out.println(hash);
-        HashMap<String, Double> map = new HashMap<>(Helper.CalculateIndividialAttrScore(merchant, player5));
-        System.out.println(map);
 
 
 

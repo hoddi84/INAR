@@ -86,29 +86,47 @@ public class Helper {
 
     // DOING THIS HERE NOW. NOT COMPLETE
     // update the Q valeus when we meet another player w.r.t. his Q score difference.
+    // e.g. we update the whole Q table except for the Q values for the race of player we just met,
+    // since our playr should have his values updated by the updateQ() method.
     public static void UpdateQAllTable(MerchantActions merchantActions, Merchant merchant, Player player, double value) {
         HashMap<String, Integer> listPartialMatches = new HashMap<>(QPartialPlayerMatches(merchant,player));
+        System.out.println("listPartialMatches: " + listPartialMatches);
         // find common attributes to player
         for (int i = 0; i < merchant.Q.size(); i++) {
             double accAttr = 0.0;
             double score = 0.0;
             double total = listPartialMatches.get("total");
-            if (merchantActions.equals(MerchantActions.LetIn)) {
+            if (merchant.Q.get(i).merchantActions.equals(merchantActions) && !merchant.Q.get(i).raceType.equals(player.raceType)) {
+                System.out.println("Im here");
                 ArrayList<String> listMatches = new ArrayList<>(QMatchedAttributes(merchant.Q.get(i), player));
+                System.out.println("Here now");
+                System.out.println("listMatches: " + listMatches);
                 for (int k = 0; k < listMatches.size(); k++) {
-                    score = listPartialMatches.get(listMatches);
+                    score = listPartialMatches.get(listMatches.get(k));
+                    System.out.println("score: " + score);
+                    accAttr += score;
+                    System.out.println("accAttr: " + accAttr);
                 }
-                accAttr += score;
+                System.out.println("Q-value before: " + merchant.Q.get(i).value);
+                merchant.Q.get(i).value += (accAttr/total)*value;
+                System.out.println("Q-value = " + merchant.Q.get(i).value + " += " + "(" + accAttr + "/" + total + ")" + "*" + value);
             }
-            merchant.Q.get(i).value += (accAttr/total)*value;
+
             if (merchantActions.equals(MerchantActions.ThrowOut)) {
+                System.out.println("Im here");
                 ArrayList<String> listMatches = new ArrayList<>(QMatchedAttributes(merchant.Q.get(i), player));
+                System.out.println("Here now");
+                System.out.println("listMatches: " + listMatches);
                 for (int k = 0; k < listMatches.size(); k++) {
-                    score = listPartialMatches.get(listMatches);
+                    score = listPartialMatches.get(listMatches.get(k));
+                    System.out.println("score: " + score);
+                    accAttr += score;
+                    System.out.println("accAttr: " + accAttr);
                 }
-                accAttr += score;
+                System.out.println("Q-value before: " + merchant.Q.get(i).value);
+                merchant.Q.get(i).value += (accAttr/total)*value;
+                System.out.println("Q-value = " + merchant.Q.get(i).value + " += " + "(" + accAttr + "/" + total + ")" + "*" + value);
             }
-            merchant.Q.get(i).value += (accAttr/total)*value;
         }
     }
 
