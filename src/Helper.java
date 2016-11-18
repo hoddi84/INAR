@@ -1,5 +1,8 @@
+import java.time.chrono.MinguoChronology;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by hoddi84 on 15.11.2016.
@@ -153,8 +156,9 @@ public class Helper {
         return accumulatedScore;
     }
 
-    // IM HERE
-    public static HashMap<String, Double> MerchantGreet(Merchant merchant, Player player) {
+    // find the individual score for the attributes of a approaching player from previously known
+    // player attributes from Q.
+    public static HashMap<String, Double> CalculateIndividialAttrScore(Merchant merchant, Player player) {
         HashMap<String, Integer> map = new HashMap<>(QPartialPlayerMatches(merchant, player));
         HashMap<String, Double> newMap = new HashMap<>();
         for (int i = 0; i < merchant.Q.size(); i++) {
@@ -162,7 +166,6 @@ public class Helper {
             for (int k = 0; k < merchant.Q.get(i).features.size(); k++) {
                 if (map.containsKey(merchant.Q.get(i).features.get(k))) {
                     newScore = merchant.Q.get(i).value / merchant.Q.get(i).features.size();
-                    System.out.println("newScore: " + newScore);
                     if (newMap.containsKey(merchant.Q.get(i).features.get(k))) {
                         double oldScore = newMap.get(merchant.Q.get(i).features.get(k));
                         double nextScore = newScore + oldScore;
@@ -175,6 +178,28 @@ public class Helper {
                 }
             }
         }
+        // iterate the newMap and divide by total attribute occurrences from map.
+        Iterator it = newMap.entrySet().iterator();
+        for (Map.Entry<String, Double> newMapElement : newMap.entrySet()) {
+            for (Map.Entry<String, Integer> mapElement : map.entrySet()) {
+                if (newMapElement.getKey().equals(mapElement.getKey())) {
+                    double oldScore = newMapElement.getValue();
+                    double newScore = oldScore/mapElement.getValue();
+                    newMapElement.setValue(newScore);
+                }
+            }
+        }
+        // iterate through newMap to find the highest valued attribute
+        // and it's corresponding string.
+        double highest = Double.MIN_VALUE;
+        String highestAttribute = "";
+        for (Map.Entry<String, Double> element : newMap.entrySet()) {
+            if (element.getValue() > highest) {
+                highest = element.getValue();
+                highestAttribute = element.getKey();
+            }
+        }
+        System.out.println("String: " + highestAttribute + " " + "Value: " + highest);
         return newMap;
     }
 }

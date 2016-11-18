@@ -33,7 +33,7 @@ public class Main {
 
         HashMap<String,Integer> hash = merchant.QPartialPlayerMatches(player5);
         System.out.println(hash);
-        HashMap<String, Double> map = new HashMap<>(Helper.MerchantGreet(merchant, player5));
+        HashMap<String, Double> map = new HashMap<>(Helper.CalculateIndividialAttrScore(merchant, player5));
         System.out.println(map);
 
 
