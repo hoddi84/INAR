@@ -20,6 +20,7 @@ public class Merchant {
         int move = rnd.nextInt(10);
         if (move == 0) {
             // 10% chance for random move. Two moves possible.
+            System.out.println("I chose a random action to perform (10%)");
             int randomMove = rnd.nextInt(2);
             if (randomMove == 0) {
                 return MerchantActions.LetIn;
@@ -30,7 +31,7 @@ public class Merchant {
         }
         else {
             // 90% chance to choose maxQ action.
-            System.out.println("90%");
+            System.out.println("I chose my best action to perform (90%)");
             return maxQaction(player);
         }
     }
@@ -41,36 +42,34 @@ public class Merchant {
             //Q.get(0).value = 0.0;
             //Q.get(1).value = 0.0;
         }
+
         for (int i = 0; i < Q.size(); i++) {
             if (player.raceType.equals(Q.get(i).raceType)) {
                 System.out.println("I have met this race: " + player.raceType);
                 // merchant has this race in memory, finding appropriate action to execute.
                 if (merchantActions(player) == MerchantActions.LetIn) {
-                    System.out.println("I let you in");
-                    updateQ(player,MerchantActions.LetIn);
-                    break;
+                    System.out.println("I let him in, and his action was to " + player.playerActions);
+                    updateQ(player, MerchantActions.LetIn);
+                    return;
                 }
                 {
-                    System.out.println("I throw you out");
-                    updateQ(player,MerchantActions.ThrowOut);
-                    break;
+                    System.out.println("I threw him out");
+                    updateQ(player, MerchantActions.ThrowOut);
+                    return;
                 }
             }
-            else {
-                System.out.println("I have not met this race: " + player.raceType);
-                // merchant has not met this race, calculate the races score and add to Q.
-                AddPlayerToQ(player);
-                if (merchantActions(player) == MerchantActions.LetIn) {
-                    System.out.println("I let you in");
-                    updateQ(player,MerchantActions.LetIn);
-                    break;
-                }
-                {
-                    System.out.println("I throw you out");
-                    updateQ(player,MerchantActions.ThrowOut);
-                    break;
-                }
-            }
+        }
+        System.out.println("I have not met this race: " + player.raceType);
+        // merchant has not met this race, calculate the races score and add to Q.
+        AddPlayerToQ(player);
+        if (merchantActions(player) == MerchantActions.LetIn) {
+            System.out.println("I let him in, and his action was to " + player.playerActions);
+            updateQ(player,MerchantActions.LetIn);
+        }
+        else
+        {
+            System.out.println("I throw you out");
+            updateQ(player,MerchantActions.ThrowOut);
         }
     }
 
@@ -123,6 +122,8 @@ public class Merchant {
             double Qmax = getQmax(player);
             double newQvalue = Q + alpha*(R + gamma*Qmax - Q);
             setQ(player, merchantActions, newQvalue);
+            UpdateQAllTable(merchantActions, player, newQvalue);
+
         }
     }
 
@@ -270,5 +271,32 @@ public class Merchant {
         return map;
     }
 
-
+    // update the Q valeus when we meet another player w.r.t. his Q score difference.
+    // e.g. we update the whole Q table except for the Q values for the race of player we just met,
+    // since our playr should have his values updated by the updateQ() method.
+    public void UpdateQAllTable(MerchantActions merchantActions, Player player, double value) {
+        HashMap<String, Integer> listPartialMatches = new HashMap<>(QPartialPlayerMatches(player));
+        // find common attributes to player
+        for (int i = 0; i < Q.size(); i++) {
+            double accAttr = 0.0;
+            double score = 0.0;
+            double total = listPartialMatches.get("total");
+            if (Q.get(i).merchantActions.equals(merchantActions) && !Q.get(i).raceType.equals(player.raceType)) {
+                ArrayList<String> listMatches = new ArrayList<>(QMatchedAttributes(Q.get(i), player));
+                for (int k = 0; k < listMatches.size(); k++) {
+                    score = listPartialMatches.get(listMatches.get(k));
+                    accAttr += score;
+                }
+                Q.get(i).value += (accAttr/total)*value;
+            }
+            if (merchantActions.equals(MerchantActions.ThrowOut)) {
+                ArrayList<String> listMatches = new ArrayList<>(QMatchedAttributes(Q.get(i), player));
+                for (int k = 0; k < listMatches.size(); k++) {
+                    score = listPartialMatches.get(listMatches.get(k));
+                    accAttr += score;
+                }
+                Q.get(i).value += (accAttr/total)*value;
+            }
+        }
+    }
 }

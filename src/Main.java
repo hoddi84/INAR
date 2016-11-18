@@ -23,42 +23,46 @@ public class Main {
 
         PrintQ(merchant);
 
+        merchant.MeetPlayer(player1);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player7);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player2);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player2);
+
+        PrintQ(merchant);
+
         merchant.MeetPlayer(player5);
 
         PrintQ(merchant);
 
-        Helper.UpdateQAllTable(MerchantActions.LetIn, merchant, player7, 2.0);
-
-        PrintQ(merchant);
-
-        /*
-        merchant.MeetPlayer(player6);
-
-        PrintQ(merchant);
-
         merchant.MeetPlayer(player5);
 
         PrintQ(merchant);
 
-        Helper.UpdateQAllTable(MerchantActions.LetIn, merchant, player5, 2.0);
+        merchant.MeetPlayer(player3);
 
         PrintQ(merchant);
-*/
 
+        merchant.MeetPlayer(player3);
 
+        PrintQ(merchant);
 
+        merchant.MeetPlayer(player3);
 
-        //HashMap<String,Integer> hash = merchant.QPartialPlayerMatches(player5);
-        //System.out.println(hash);
-        //HashMap<String, Double> map = new HashMap<>(Helper.CalculateIndividialAttrScore(merchant, player5));
-        //System.out.println(map);
-
+        PrintQ(merchant);
 
 
         // TODO
-        // change from racial bias to feature bias, by using the helper functions to replace some in Merchant.java.
-        // replace the reward R, with the corresponding player action score as the immediate reward, R.
-        // fix the score function w.r.t. merchant actions before adding to Q.
+        // add merchant messages.
+        // make merchant choose random actions when the highest are equal instead of the last equal highest action
         // .....
     }
 
