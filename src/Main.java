@@ -31,19 +31,17 @@ public class Main {
 
         PrintQ(merchant);
 
+
+        //HashMap<String, Integer> map = new HashMap<>(Helper.QPartialPlayerMatches(merchant,player5));
+        //System.out.println(map);
+
+
+
         HashMap<String,Integer> hash = merchant.QPartialPlayerMatches(player5);
         System.out.println(hash);
         HashMap<String, Double> map = new HashMap<>(Helper.CalculateIndividialAttrScore(merchant, player5));
         System.out.println(map);
 
-
-
-        //HashMap<String,Integer> hash = new HashMap<>(Helper.QPartialPlayerMatches(merchant, player6));
-        //System.out.println(hash);
-
-
-        //double[] d = Helper.QPartialPlayerScoreEachAction(merchant, player6);
-        //System.out.println(d[0] + " " +  d[1]);
 
 
         // TODO

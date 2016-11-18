@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.time.chrono.MinguoChronology;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +84,34 @@ public class Helper {
         return map;
     }
 
+    // DOING THIS HERE NOW. NOT COMPLETE
+    // update the Q valeus when we meet another player w.r.t. his Q score difference.
+    public static void UpdateQAllTable(MerchantActions merchantActions, Merchant merchant, Player player, double value) {
+        HashMap<String, Integer> listPartialMatches = new HashMap<>(QPartialPlayerMatches(merchant,player));
+        // find common attributes to player
+        for (int i = 0; i < merchant.Q.size(); i++) {
+            double accAttr = 0.0;
+            double score = 0.0;
+            double total = listPartialMatches.get("total");
+            if (merchantActions.equals(MerchantActions.LetIn)) {
+                ArrayList<String> listMatches = new ArrayList<>(QMatchedAttributes(merchant.Q.get(i), player));
+                for (int k = 0; k < listMatches.size(); k++) {
+                    score = listPartialMatches.get(listMatches);
+                }
+                accAttr += score;
+            }
+            merchant.Q.get(i).value += (accAttr/total)*value;
+            if (merchantActions.equals(MerchantActions.ThrowOut)) {
+                ArrayList<String> listMatches = new ArrayList<>(QMatchedAttributes(merchant.Q.get(i), player));
+                for (int k = 0; k < listMatches.size(); k++) {
+                    score = listPartialMatches.get(listMatches);
+                }
+                accAttr += score;
+            }
+            merchant.Q.get(i).value += (accAttr/total)*value;
+        }
+    }
+
     // compare a player to a StateActionValue attributes and list the attributes they have in common.
     public static ArrayList<String> QMatchedAttributes(StateActionValue stateActionValue, Player player) {
         ArrayList<String> list = new ArrayList<>();
@@ -151,8 +180,8 @@ public class Helper {
                 accumulatedScore[1] += (scoreAttributes / totalAttributes) * element.value;
             }
         }
-        accumulatedScore[0] = accumulatedScore[0]/counter;
-        accumulatedScore[1] = accumulatedScore[1]/counter2;
+        accumulatedScore[0] = accumulatedScore[0]/counter; // merchant action 1.
+        accumulatedScore[1] = accumulatedScore[1]/counter2; // merchant action 2.
         return accumulatedScore;
     }
 
