@@ -38,9 +38,18 @@ public class Merchant {
 
     public void MeetPlayer(Player player) {
         if (Q.isEmpty()) {
+            System.out.println("You are the first person I have met, welcome " + player.raceType);
             AddPlayerToQ(player);
-            //Q.get(0).value = 0.0;
-            //Q.get(1).value = 0.0;
+            if (merchantActions(player) == MerchantActions.LetIn) {
+                System.out.println("I let him in, and his action was to " + player.playerActions);
+                updateQ(player, MerchantActions.LetIn);
+                return;
+            }
+            {
+                System.out.println("I threw him out");
+                updateQ(player, MerchantActions.ThrowOut);
+                return;
+            }
         }
 
         for (int i = 0; i < Q.size(); i++) {
@@ -81,21 +90,9 @@ public class Merchant {
         Q.add(state1act1);
         Q.add(state1act2);
     }
-/*
-    public void MeetPlayer(Player player) {
 
-        System.out.println("\nI met: " + player);
-        if (merchantActions(player) == MerchantActions.LetIn) {
-            System.out.println("I let you in");
-            updateQ(player,MerchantActions.LetIn);
-        }
-        else {
-            System.out.println("I throw you out");
-            updateQ(player,MerchantActions.ThrowOut);
-        }
-    }
-*/
-    // assuming all players are in here with their values pre-calculated.
+    // return the merchant action which corresponds to the highest Q-value
+    // which is the best actions for the merchant to perform.
     public MerchantActions maxQaction(Player player) {
         double maxValue = Integer.MIN_VALUE;
         MerchantActions action = MerchantActions.NULL;
@@ -110,11 +107,18 @@ public class Merchant {
         return action;
     }
 
-
+    // updates a player's Q-value based on the merchants action, using the players action as the immediate reward.
+    // when throwing players out, we must choose which reward to give since the player won't be able to perform
+    // an action since he was thrown out.
     public void updateQ(Player player, MerchantActions merchantActions) {
 
         if (merchantActions.equals(MerchantActions.ThrowOut)) {
-            System.out.println("Throw out not changing Q value");
+            double R = -1.0; // no immediate reward since player does not get to perform any action.
+            double Q = getQ(player, merchantActions);
+            double Qmax = getQmax(player);
+            double newQvalue = Q + alpha*(R + gamma*Qmax - Q);
+            setQ(player, merchantActions, newQvalue);
+            UpdateQAllTable(merchantActions, player, newQvalue);
         }
         else {
             double R = getRfromPlayer(player);

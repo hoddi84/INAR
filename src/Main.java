@@ -19,10 +19,12 @@ public class Main {
 
         PrintQ(merchant);
 
+        System.out.println("First");
         merchant.MeetPlayer(player1);
 
         PrintQ(merchant);
 
+        System.out.println("Second");
         merchant.MeetPlayer(player1);
 
         PrintQ(merchant);
@@ -56,6 +58,18 @@ public class Main {
         PrintQ(merchant);
 
         merchant.MeetPlayer(player3);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player7);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player7);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player7);
 
         PrintQ(merchant);
 
