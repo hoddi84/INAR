@@ -59,6 +59,9 @@ public class Main {
 
         PrintQ(merchant);
 
+        HashMap<String, Double> map = new HashMap<>(Helper.CalculateIndividialAttrScore(merchant, player4));
+        System.out.println(map);
+
 
         // TODO
         // add merchant messages.
