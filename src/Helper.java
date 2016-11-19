@@ -249,4 +249,20 @@ public class Helper {
         System.out.println("String: " + highestAttribute + " " + "Value: " + highest);
         return newMap;
     }
+
+    // create a list containing all the possible races.
+    public static ArrayList<PlayerActionsValue> GetActionList() {
+        ArrayList<PlayerActionsValue> list = new ArrayList<>();
+        PlayerActionsValue orc = new PlayerActionsValue(RaceType.Orc);
+        PlayerActionsValue troll = new PlayerActionsValue(RaceType.Troll);
+        PlayerActionsValue elf = new PlayerActionsValue(RaceType.Elf);
+        PlayerActionsValue human = new PlayerActionsValue(RaceType.Human);
+        PlayerActionsValue goblin = new PlayerActionsValue(RaceType.Goblin);
+        list.add(orc);
+        list.add(troll);
+        list.add(elf);
+        list.add(human);
+        list.add(goblin);
+        return list;
+    }
 }

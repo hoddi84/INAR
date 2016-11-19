@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -7,11 +8,10 @@ import java.util.Random;
  */
 public class Merchant {
 
-    //ArrayList<StateActionValue> Q = Helper.CreateQ(); // Q-value struct.
-    //ArrayList<StateActionValue> R = Helper.CreateR(); // R-value struct.
     ArrayList<StateActionValue> Q = new ArrayList<>();
     double alpha = 0.1; // learning rate.
     double gamma = 0.9; // discount factor.
+    ArrayList<PlayerActionsValue> actionList = new ArrayList<>(Helper.GetActionList());
 
     // returns the merchant action.
     // 10% chance for a random action, 90% chance to choose MaxQ action.
@@ -36,7 +36,12 @@ public class Merchant {
         }
     }
 
+
     public void MeetPlayer(Player player) {
+        // we meet a player, need a method to store all player actions.
+        // trying out UpdatePlayerActionList()
+        UpdatePlayerActionList(player, actionList);
+
         if (Q.isEmpty()) {
             System.out.println("You are the first person I have met, welcome " + player.raceType);
             AddPlayerToQ(player);
@@ -302,5 +307,16 @@ public class Merchant {
                 Q.get(i).value += (accAttr/total)*value;
             }
         }
+    }
+
+    public void UpdatePlayerActionList(Player player, ArrayList<PlayerActionsValue> actionList) {
+
+        for (PlayerActionsValue x : actionList) {
+            if (player.raceType.equals(x.raceType)) {
+                x.UpdateActionValues(player.playerActions);
+            }
+        }
+
+
     }
 }

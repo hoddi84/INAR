@@ -77,6 +77,13 @@ public class Main {
         System.out.println(map);
 
 
+        System.out.println("actions");
+        for (PlayerActionsValue x : merchant.actionList) {
+            System.out.println(x);
+        }
+
+
+
         // TODO
         // add merchant messages.
         // make merchant choose random actions when the highest are equal instead of the last equal highest action
