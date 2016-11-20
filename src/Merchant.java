@@ -119,7 +119,8 @@ public class Merchant {
     public void updateQ(Player player, MerchantActions merchantActions) {
 
         if (merchantActions.equals(MerchantActions.ThrowOut)) {
-            double R = -1.0; // no immediate reward since player does not get to perform any action.
+            double R = ReturnExpectedRValue(player); // need to rethink this value.
+            System.out.println("R value: " + R);
             double Q = getQ(player, merchantActions);
             double Qmax = getQmax(player);
             double newQvalue = Q + alpha*(R + gamma*Qmax - Q);
@@ -188,22 +189,6 @@ public class Merchant {
         double Rval = player.actionScore;
         return Rval;
     }
-
-    // get the R value from the created table.
-    // not using, we are using getRfromPlayer().
-    /*
-    public double getR(Player player, MerchantActions merchantActions) {
-        double Rval = 0;
-        for (int i = 0; i < R.size(); i++) {
-            if (player.raceType.equals(R.get(i).raceType)) {
-                if (merchantActions.equals(R.get(i).merchantActions)) {
-                    Rval = R.get(i).value;
-                }
-            }
-        }
-        return Rval;
-    }
-    */
 
     public double[] QPartialPlayerScoreEachAction(Player player) {
         HashMap<String, Integer> map = new HashMap<>(QPartialPlayerMatches(player));
@@ -299,7 +284,8 @@ public class Merchant {
                 }
                 Q.get(i).value += (accAttr/total)*value;
             }
-            if (merchantActions.equals(MerchantActions.ThrowOut)) {
+            //if (merchantActions.equals(MerchantActions.ThrowOut)) {
+            if (Q.get(i).merchantActions.equals(merchantActions) && !Q.get(i).raceType.equals(player.raceType)) {
                 ArrayList<String> listMatches = new ArrayList<>(QMatchedAttributes(Q.get(i), player));
                 for (int k = 0; k < listMatches.size(); k++) {
                     score = listPartialMatches.get(listMatches.get(k));
@@ -310,7 +296,7 @@ public class Merchant {
         }
     }
 
-    // returns a list of all race attributes and their corresponding
+    // returns and counts a list of all race attributes and their corresponding
     // counts of player actions.
     // e.g. [Large, Green, Pointy] steal: 3 buy: 0 sell: 0 leave: 0
     public void UpdatePlayerActionList(Player player, ArrayList<PlayerActionsValue> actionList) {
@@ -320,9 +306,10 @@ public class Merchant {
                 x.UpdateActionValues(player.playerActions);
             }
         }
+        UpdateFeatureCuntList();
     }
 
-    // returns a list of all attributes and their corresponding
+    // updates a list of all attributes and their corresponding
     // counts of player actions
     // e.g. Large buy: 1 sell: 0 steal: 3 leave: 0
     public void UpdateFeatureCuntList() {
@@ -354,6 +341,60 @@ public class Merchant {
                     }
                 }
             }
+        }
+    }
+
+    // a pre-made hash map with hardcoded player actions and their reward.
+    // returns the best expected score for R, immediate reward
+    // when a merchant throws out a player.
+    // we use this when we calculate the expected immediate reward for the merchant
+    // when he throws out a player and the player does not have a chance to make an action.
+    public double ReturnExpectedRValue(Player player) {
+        HashMap<String, Integer> countMap = new HashMap<>();
+        int highest = 0;
+        String bestAction = "";
+        countMap.put("buy",0);
+        countMap.put("sell",0);
+        countMap.put("steal",0);
+        countMap.put("leave",0);
+        for (String x : player.features) {
+            for (int i = 0; i < featureCountList.size(); i++) {
+                if (x.equals(featureCountList.get(i).feature)) {
+                    int oldBuy = countMap.get("buy");
+                    int oldSell = countMap.get("sell");
+                    int oldSteal = countMap.get("steal");
+                    int oldLeave = countMap.get("leave");
+                    int buy = featureCountList.get(i).buy + oldBuy;
+                    int sell = featureCountList.get(i).sell + oldSell;
+                    int steal = featureCountList.get(i).steal + oldSteal;
+                    int leave = featureCountList.get(i).leave + oldLeave;
+                    countMap.replace("buy", oldBuy, buy);
+                    countMap.replace("sell", oldSell, sell);
+                    countMap.replace("steal", oldSteal, steal);
+                    countMap.replace("leave", oldLeave, leave);
+                }
+            }
+        }
+        for (Map.Entry<String, Integer> map : countMap.entrySet()) {
+            if (map.getValue() > highest) {
+                highest = map.getValue();
+                bestAction = map.getKey();
+            }
+        }
+        // these are the immediate rewards R, the merchant won't be getting those
+        // since he threw out a player, therefore they should perhaps be the negated values
+        // of what he might have gotten.
+        if (bestAction == "buy") {
+            return -2.0/100.0;
+        }
+        else if (bestAction == "sell") {
+            return -1.0/100.0;
+        }
+        else if (bestAction == "steal") {
+            return 3.0/100.0;
+        }
+        else {
+            return 0.0;
         }
     }
 }

@@ -19,31 +19,15 @@ public class Main {
 
         PrintQ(merchant);
 
-        merchant.MeetPlayer(player1);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player3);
-
-        PrintQ(merchant);
-
         merchant.MeetPlayer(player5);
 
         PrintQ(merchant);
 
-        merchant.MeetPlayer(player3);
-
-        PrintQ(merchant);
-
         merchant.MeetPlayer(player6);
 
         PrintQ(merchant);
 
-        merchant.MeetPlayer(player7);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player6);
+        merchant.MeetPlayer(player1);
 
         PrintQ(merchant);
 
@@ -55,24 +39,14 @@ public class Main {
 
         PrintQ(merchant);
 
-        HashMap<String, Double> map = new HashMap<>(Helper.CalculateIndividialAttrScore(merchant, player4));
-        System.out.println(map);
+        merchant.MeetPlayer(player7);
 
+        PrintQ(merchant);
 
-        System.out.println("actions");
-        for (PlayerActionsValue x : merchant.actionList) {
-            System.out.println(x);
-        }
-
-        merchant.UpdateFeatureCuntList();
-
-        for (FeatureCount x : merchant.featureCountList) {
-            System.out.println(x);
-        }
 
         // TODO
         // add merchant messages.
-        // make merchant choose random actions when the highest are equal instead of the last equal highest action
+        // need to rethink the R-value from throwing out players.
         // .....
     }
 
