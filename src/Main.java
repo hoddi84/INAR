@@ -19,29 +19,11 @@ public class Main {
 
         PrintQ(merchant);
 
-        System.out.println("First");
         merchant.MeetPlayer(player1);
 
         PrintQ(merchant);
 
-        System.out.println("Second");
-        merchant.MeetPlayer(player1);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player7);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player2);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player2);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player5);
+        merchant.MeetPlayer(player3);
 
         PrintQ(merchant);
 
@@ -53,23 +35,23 @@ public class Main {
 
         PrintQ(merchant);
 
+        merchant.MeetPlayer(player6);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player7);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player6);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player7);
+
+        PrintQ(merchant);
+
         merchant.MeetPlayer(player3);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player3);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player7);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player7);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player7);
 
         PrintQ(merchant);
 
@@ -82,7 +64,11 @@ public class Main {
             System.out.println(x);
         }
 
+        merchant.UpdateFeatureCuntList();
 
+        for (FeatureCount x : merchant.featureCountList) {
+            System.out.println(x);
+        }
 
         // TODO
         // add merchant messages.

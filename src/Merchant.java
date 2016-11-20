@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import com.sun.org.apache.xalan.internal.utils.FeatureManager;
+
+import java.util.*;
 
 /**
  * Created by hoddi84 on 15.11.2016.
@@ -12,6 +11,8 @@ public class Merchant {
     double alpha = 0.1; // learning rate.
     double gamma = 0.9; // discount factor.
     ArrayList<PlayerActionsValue> actionList = new ArrayList<>(Helper.GetActionList());
+    ArrayList<FeatureCount> featureCountList = new ArrayList<>();
+    ArrayList<String> featureList = new ArrayList<>();
 
     // returns the merchant action.
     // 10% chance for a random action, 90% chance to choose MaxQ action.
@@ -309,6 +310,9 @@ public class Merchant {
         }
     }
 
+    // returns a list of all race attributes and their corresponding
+    // counts of player actions.
+    // e.g. [Large, Green, Pointy] steal: 3 buy: 0 sell: 0 leave: 0
     public void UpdatePlayerActionList(Player player, ArrayList<PlayerActionsValue> actionList) {
 
         for (PlayerActionsValue x : actionList) {
@@ -316,7 +320,40 @@ public class Merchant {
                 x.UpdateActionValues(player.playerActions);
             }
         }
+    }
 
+    // returns a list of all attributes and their corresponding
+    // counts of player actions
+    // e.g. Large buy: 1 sell: 0 steal: 3 leave: 0
+    public void UpdateFeatureCuntList() {
 
+        // get the features.
+        for (PlayerActionsValue x : actionList) {
+            for (String y : x.features) {
+                if (featureList.contains(y)) {
+                }
+                else {
+                    featureList.add(y);
+                }
+            }
+        }
+
+        for (String x : featureList) {
+            FeatureCount newCount = new FeatureCount(x);
+            featureCountList.add(newCount);
+        }
+
+        for (PlayerActionsValue x : actionList) {
+            for (String y : x.features) {
+                for (FeatureCount count : featureCountList) {
+                    if (y.equals(count.feature)) {
+                        count.buy += x.actionList.get(PlayerActions.Buy);
+                        count.sell += x.actionList.get(PlayerActions.Sell);
+                        count.steal += x.actionList.get(PlayerActions.Steal);
+                        count.leave += x.actionList.get(PlayerActions.Leave);
+                    }
+                }
+            }
+        }
     }
 }
