@@ -1,5 +1,6 @@
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by hoddi84 on 15.11.2016.
@@ -43,16 +44,6 @@ public class Main {
         merchant.MeetPlayer(player3);
 
         PrintQ(merchant);
-
-
-        for (FeatureCount x : merchant.featureCountList) {
-            System.out.println(x);
-        }
-
-        for (String x : merchant.featureList) {
-            System.out.println(x);
-        }
-
 
         // TODO
         // add merchant messages.

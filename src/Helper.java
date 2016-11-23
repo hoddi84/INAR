@@ -205,7 +205,7 @@ public class Helper {
 
     // find the individual score for the attributes of a approaching player from previously known
     // player attributes from Q.
-    public static HashMap<String, Double> CalculateIndividialAttrScore(Merchant merchant, Player player) {
+    public static HashMap<String, Double> CalculateIndividualAttrScore(Merchant merchant, Player player) {
         HashMap<String, Integer> map = new HashMap<>(QPartialPlayerMatches(merchant, player));
         HashMap<String, Double> newMap = new HashMap<>();
         for (int i = 0; i < merchant.Q.size(); i++) {
@@ -247,6 +247,9 @@ public class Helper {
             }
         }
         System.out.println("String: " + highestAttribute + " " + "Value: " + highest);
+        // return only highest valued string for now.
+        newMap.clear();
+        newMap.put(highestAttribute, highest);
         return newMap;
     }
 

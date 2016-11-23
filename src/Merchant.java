@@ -45,6 +45,7 @@ public class Merchant {
         UpdatePlayerActionList(player, actionList);
 
         if (Q.isEmpty()) {
+            System.out.println("Hello, friend");
             System.out.println("You are the first person I have met, welcome " + player.raceType);
             AddPlayerToQ(player);
             if (merchantActions(player) == MerchantActions.LetIn) {
@@ -61,6 +62,7 @@ public class Merchant {
 
         for (int i = 0; i < Q.size(); i++) {
             if (player.raceType.equals(Q.get(i).raceType)) {
+                MerchantMessage.getMerchantMessage(CalculateIndividualAttrScore(player));
                 System.out.println("I have met this race: " + player.raceType);
                 // merchant has this race in memory, finding appropriate action to execute.
                 if (merchantActions(player) == MerchantActions.LetIn) {
@@ -68,13 +70,14 @@ public class Merchant {
                     updateQ(player, MerchantActions.LetIn);
                     return;
                 }
-                {
+                else {
                     System.out.println("I threw him out");
                     updateQ(player, MerchantActions.ThrowOut);
                     return;
                 }
             }
         }
+        MerchantMessage.getMerchantMessage(CalculateIndividualAttrScore(player));
         System.out.println("I have not met this race: " + player.raceType);
         // merchant has not met this race, calculate the races score and add to Q.
         AddPlayerToQ(player);
@@ -391,5 +394,54 @@ public class Merchant {
         else {
             return 0.0;
         }
+    }
+
+    // find the individual score for the attributes of a approaching player from previously known
+    // player attributes from Q.
+    public HashMap<String, Double> CalculateIndividualAttrScore(Player player) {
+        HashMap<String, Integer> map = new HashMap<>(QPartialPlayerMatches(player));
+        HashMap<String, Double> newMap = new HashMap<>();
+        for (int i = 0; i < Q.size(); i++) {
+            double newScore = 0.0;
+            for (int k = 0; k < Q.get(i).features.size(); k++) {
+                if (map.containsKey(Q.get(i).features.get(k))) {
+                    newScore = Q.get(i).value / Q.get(i).features.size();
+                    if (newMap.containsKey(Q.get(i).features.get(k))) {
+                        double oldScore = newMap.get(Q.get(i).features.get(k));
+                        double nextScore = newScore + oldScore;
+                        newMap.replace(Q.get(i).features.get(k), oldScore, nextScore);
+                    }
+                    else {
+                        newMap.put(Q.get(i).features.get(k), newScore);
+                    }
+
+                }
+            }
+        }
+        // iterate the newMap and divide by total attribute occurrences from map.
+        Iterator it = newMap.entrySet().iterator();
+        for (Map.Entry<String, Double> newMapElement : newMap.entrySet()) {
+            for (Map.Entry<String, Integer> mapElement : map.entrySet()) {
+                if (newMapElement.getKey().equals(mapElement.getKey())) {
+                    double oldScore = newMapElement.getValue();
+                    double newScore = oldScore/mapElement.getValue();
+                    newMapElement.setValue(newScore);
+                }
+            }
+        }
+        // iterate through newMap to find the highest valued attribute
+        // and it's corresponding string.
+        double highest = -Double.MAX_VALUE;
+        String highestAttribute = "";
+        for (Map.Entry<String, Double> element : newMap.entrySet()) {
+            if (element.getValue() > highest) {
+                highest = element.getValue();
+                highestAttribute = element.getKey();
+            }
+        }
+        // return only highest valued string for now.
+        newMap.clear();
+        newMap.put(highestAttribute, highest);
+        return newMap;
     }
 }
