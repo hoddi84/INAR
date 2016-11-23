@@ -121,13 +121,11 @@ public class Merchant {
 
         if (merchantActions.equals(MerchantActions.ThrowOut)) {
             double R = ReturnExpectedRValue(player); // need to rethink this value.
-            System.out.println("R value: " + R);
             double Q = getQ(player, merchantActions);
             double Qmax = getQmax(player);
             double newQvalue = Q + alpha*(R + gamma*Qmax - Q);
             double Qdiff = newQvalue - Q;
             setQ(player, merchantActions, newQvalue);
-            UpdateQAllTable(merchantActions, player, Qdiff);
         }
         else {
             double R = getRfromPlayer(player);
@@ -285,16 +283,6 @@ public class Merchant {
                     score = listPartialMatches.get(listMatches.get(k));
                     accAttr += score;
                 }
-                System.out.println("Qval = " + Q.get(i).value + " += " + "( " + accAttr + "/ " + total + ")* " + value);
-                Q.get(i).value += (accAttr/total)*value;
-            }
-            //if (merchantActions.equals(MerchantActions.ThrowOut)) {
-            if (Q.get(i).merchantActions.equals(merchantActions) && !Q.get(i).raceType.equals(player.raceType)) {
-                ArrayList<String> listMatches = new ArrayList<>(QMatchedAttributes(Q.get(i), player));
-                for (int k = 0; k < listMatches.size(); k++) {
-                    score = listPartialMatches.get(listMatches.get(k));
-                    accAttr += score;
-                }
                 Q.get(i).value += (accAttr/total)*value;
             }
         }
@@ -398,8 +386,7 @@ public class Merchant {
             return 1.0*(countMap.get("sell")/total);
         }
         else if (bestAction == "steal") {
-            System.out.println("return :" + countMap.get("steal") + "er" + total);
-            return -3.0*(countMap.get("steal")/total);
+            return -3.0*((double)countMap.get("steal")/(double)total);
         }
         else {
             return 0.0;

@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 /**
@@ -27,7 +28,19 @@ public class Main {
 
         PrintQ(merchant);
 
-        merchant.MeetPlayer(player1);
+        merchant.MeetPlayer(player5);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player3);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player3);
+
+        PrintQ(merchant);
+
+        merchant.MeetPlayer(player3);
 
         PrintQ(merchant);
 
