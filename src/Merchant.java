@@ -1,4 +1,5 @@
 import com.sun.org.apache.xalan.internal.utils.FeatureManager;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 
 import java.util.*;
 
@@ -124,16 +125,18 @@ public class Merchant {
             double Q = getQ(player, merchantActions);
             double Qmax = getQmax(player);
             double newQvalue = Q + alpha*(R + gamma*Qmax - Q);
+            double Qdiff = newQvalue - Q;
             setQ(player, merchantActions, newQvalue);
-            UpdateQAllTable(merchantActions, player, newQvalue);
+            UpdateQAllTable(merchantActions, player, Qdiff);
         }
         else {
             double R = getRfromPlayer(player);
             double Q = getQ(player, merchantActions);
             double Qmax = getQmax(player);
             double newQvalue = Q + alpha*(R + gamma*Qmax - Q);
+            double Qdiff = newQvalue - Q;
             setQ(player, merchantActions, newQvalue);
-            UpdateQAllTable(merchantActions, player, newQvalue);
+            UpdateQAllTable(merchantActions, player, Qdiff);
 
         }
     }
@@ -282,6 +285,7 @@ public class Merchant {
                     score = listPartialMatches.get(listMatches.get(k));
                     accAttr += score;
                 }
+                System.out.println("Qval = " + Q.get(i).value + " += " + "( " + accAttr + "/ " + total + ")* " + value);
                 Q.get(i).value += (accAttr/total)*value;
             }
             //if (merchantActions.equals(MerchantActions.ThrowOut)) {
@@ -314,6 +318,7 @@ public class Merchant {
     // e.g. Large buy: 1 sell: 0 steal: 3 leave: 0
     public void UpdateFeatureCuntList() {
 
+        featureCountList.clear();
         // get the features.
         for (PlayerActionsValue x : actionList) {
             for (String y : x.features) {
@@ -352,6 +357,7 @@ public class Merchant {
     public double ReturnExpectedRValue(Player player) {
         HashMap<String, Integer> countMap = new HashMap<>();
         int highest = 0;
+        int total = 0;
         String bestAction = "";
         countMap.put("buy",0);
         countMap.put("sell",0);
@@ -376,6 +382,7 @@ public class Merchant {
             }
         }
         for (Map.Entry<String, Integer> map : countMap.entrySet()) {
+            total += map.getValue();
             if (map.getValue() > highest) {
                 highest = map.getValue();
                 bestAction = map.getKey();
@@ -385,13 +392,14 @@ public class Merchant {
         // since he threw out a player, therefore they should perhaps be the negated values
         // of what he might have gotten.
         if (bestAction == "buy") {
-            return -2.0/100.0;
+            return 2.0*(countMap.get("buy")/total);
         }
         else if (bestAction == "sell") {
-            return -1.0/100.0;
+            return 1.0*(countMap.get("sell")/total);
         }
         else if (bestAction == "steal") {
-            return 3.0/100.0;
+            System.out.println("return :" + countMap.get("steal") + "er" + total);
+            return -3.0*(countMap.get("steal")/total);
         }
         else {
             return 0.0;

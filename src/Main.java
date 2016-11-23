@@ -23,7 +23,7 @@ public class Main {
 
         PrintQ(merchant);
 
-        merchant.MeetPlayer(player6);
+        merchant.MeetPlayer(player1);
 
         PrintQ(merchant);
 
@@ -31,17 +31,14 @@ public class Main {
 
         PrintQ(merchant);
 
-        merchant.MeetPlayer(player7);
 
-        PrintQ(merchant);
+        for (FeatureCount x : merchant.featureCountList) {
+            System.out.println(x);
+        }
 
-        merchant.MeetPlayer(player3);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player7);
-
-        PrintQ(merchant);
+        for (String x : merchant.featureList) {
+            System.out.println(x);
+        }
 
 
         // TODO
