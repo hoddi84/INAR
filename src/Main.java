@@ -13,35 +13,24 @@ public class Main {
 
         Player player1 = new Player(RaceType.Human, PlayerActions.Buy);
         Player player2 = new Player(RaceType.Goblin, PlayerActions.Buy);
-        Player player3 = new Player(RaceType.Orc, PlayerActions.Steal);
+        Player player3 = new Player(RaceType.Orc, PlayerActions.Buy);
         Player player4 = new Player(RaceType.Troll, PlayerActions.Buy);
         Player player5 = new Player(RaceType.Elf, PlayerActions.Buy);
         Player player6 = new Player(RaceType.Goblin, PlayerActions.Sell);
         Player player7 = new Player(RaceType.Human, PlayerActions.Steal);
+        Player player8 = new Player(RaceType.Human, PlayerActions.Leave);
 
         PrintQ(merchant);
 
-        merchant.MeetPlayer(player5);
+        for (int i = 0; i < 100; i++) {
 
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player1);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player5);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player3);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player3);
-
-        PrintQ(merchant);
-
-        merchant.MeetPlayer(player3);
+            merchant.MeetPlayer(player8);
+            PrintQ(merchant);
+            merchant.MeetPlayer(player6);
+            PrintQ(merchant);
+            merchant.MeetPlayer(player3);
+            PrintQ(merchant);
+        }
 
         PrintQ(merchant);
 
